@@ -1,0 +1,14 @@
+# Node modules directory
+node_modules/
+
+# Ignore build directory
+build/
+
+# Compiled files
+src/**/*.js
+
+# Environment variables
+.env
+
+# IDE specific files (VSCode for example)
+.vscode/
