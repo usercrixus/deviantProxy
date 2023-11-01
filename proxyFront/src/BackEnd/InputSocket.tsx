@@ -6,6 +6,7 @@ import * as ProxyType from "personnal-shared/src/Type/ProxyType"
 import * as Utilities from "personnal-shared/src/Class/Utilities"
 import * as crypto from "crypto"
 import KeyFactory from 'personnal-shared/src/Class/KeyFactory';
+import { dialog } from 'electron';
 
 export default class InputSocket {
     private static inputSocket: InputSocket;
@@ -13,6 +14,7 @@ export default class InputSocket {
     server: Server | null;
     trafficAnalyze: string[] = ["Traffic -------->>\n\n"];
     allConnections: Set<Socket> = new Set();
+    isConnectionErrorNotified: boolean = false;
 
     private constructor() {
         this.server = null;
@@ -146,28 +148,38 @@ export default class InputSocket {
             );
 
             this.initializationSequence(targetSocket, clientSocket, initialPayload)
+        });
 
-            targetSocket.on('error', (err) => {
-                console.error('Error on target socket:\n' + err + "\n\n");
-                clientSocket.end();
-            });
+        targetSocket.on('error', (err: NodeJS.ErrnoException) => {
+            if (err.code == "ECONNREFUSED" && !this.isConnectionErrorNotified) {
+                this.isConnectionErrorNotified = true;
+                setTimeout(() => this.isConnectionErrorNotified = false, 2 * 60 * 1000);
+                dialog.showMessageBox(mainWindow!, {
+                    type: 'error',
+                    title: "ECONNREFUSED",
+                    message: "There is a connection problem with the remote server. Check your connection or the server status on " + Data.getData().outputIp + ":" + Data.getData().outputPort,
+                    buttons: ['OK']
+                });
+            }
+            console.log('Error on target socket:\n' + err + "\n\n");
+            clientSocket.end();
+        });
 
-            targetSocket.on('end', () => {
-                console.error('Target disconnected\n\n');
-                clientSocket.end();
-            });
+        targetSocket.on('end', () => {
+            console.error('Target disconnected\n\n');
+            clientSocket.end();
+        });
 
-            clientSocket.on('error', (err) => {
-                console.error('\n\nError on client socket:', err);
-                targetSocket.end();
-                this.allConnections.delete(clientSocket);
-            });
+        clientSocket.on('error', (err) => {
+            console.error('\n\nError on client socket:', err);
+            targetSocket.end();
+            this.allConnections.delete(clientSocket);
+        });
 
-            clientSocket.on('end', () => {
-                console.log('Client disconnected\n\n');
-                targetSocket.end();
-                this.allConnections.delete(clientSocket);
-            });
+        clientSocket.on('end', () => {
+            console.log('Client disconnected\n\n');
+            targetSocket.end();
+            this.allConnections.delete(clientSocket);
         });
     };
 

@@ -11,7 +11,7 @@ cd ./proxy/backEnd && npm run start
 # How deploy the backend on a vm or a remote server :
 on source : cd ./proxy/backEnd && npm run build  
 on source : cd ../shared && npx tsc  
-then
+then  
 ssh user@127.0.0.1 "mkdir -p ~/proxy/backEnd"  
 ssh user@127.0.0.1 "mkdir -p ~/proxy/shared"  
 scp -r ./backEnd/{build,package.json} user@127.0.0.1:~/proxy/backEnd/  

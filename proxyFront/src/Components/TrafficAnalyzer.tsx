@@ -18,8 +18,7 @@ export default class TrafficAnalyzer extends React.Component<any, { proxyData: s
                 proxyData: data
             })
         }).then(() => {
-            window.api.receive("proxyData", (data: string) => {
-                console.log('Data received from proxy:', data);
+            window.api.receive("proxyData", (event: Electron.IpcRendererEvent, data: string) => {
                 this.state.proxyData.unshift(data);
                 this.setState({
                     proxyData: this.state.proxyData
