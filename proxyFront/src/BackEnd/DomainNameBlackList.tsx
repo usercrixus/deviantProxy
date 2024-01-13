@@ -23,6 +23,7 @@ export default class DomainNameBlackList {
     setSourceFile(path: string[]) {
         this.sourceFile = path;
         console.log("black list path : " + path);
+        this.urlCache.cache.clear();
     }
 
     async blackListedAnalysis(url: string): Promise<boolean> {

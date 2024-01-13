@@ -9,9 +9,20 @@ import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
 const config: ForgeConfig = {
-  packagerConfig: {},
+  packagerConfig: {
+    icon: "./logo.png"
+  },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [
+    new MakerSquirrel({}),
+    new MakerZIP({}, ['darwin']),
+    //new MakerRpm({}),
+    new MakerDeb({
+      options: {
+        icon: './logo.png' // specify the path to your icon here
+      }
+    })
+  ],
   plugins: [
     new WebpackPlugin({
       mainConfig,

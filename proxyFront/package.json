@@ -1,8 +1,9 @@
 {
-  "name": "my-new-app",
-  "productName": "my-new-app",
+  "name": "deviantProxy",
+  "productName": "deviantProxy",
   "version": "1.0.0",
   "description": "My Electron application description",
+  "icon": "./logo.png",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
