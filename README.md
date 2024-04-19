@@ -12,10 +12,10 @@ cd ./proxy/backEnd && npm run start
 on source : cd ./proxy/backEnd && npm run build  
 on source : cd ../shared && npx tsc  
 then  
-ssh user@127.0.0.1 "mkdir -p ~/proxy/backEnd"  
-ssh user@127.0.0.1 "mkdir -p ~/proxy/shared"  
+ssh user@127.0.0.1 "mkdir -p \~/proxy/backEnd"  
+ssh user@127.0.0.1 "mkdir -p \~/proxy/shared"  
 scp -r ./backEnd/{build,package.json} user@127.0.0.1:~/proxy/backEnd/  
-scp -r ./shared/{src,package.json} user@127.0.0.1:~/proxy/shared/  
+scp -r ./shared/{src,package.json} user@127.0.0.1:\~/proxy/shared/  
 then  
 ssh user@127.0.0.1 "cd ~/proxy/shared/ && npm i && npm link"  
 ssh user@127.0.0.1 "cd ~/proxy/backEnd/ && npm i &&  npm link personnal-shared"
