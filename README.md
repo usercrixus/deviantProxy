@@ -18,7 +18,7 @@ scp -r ./backEnd/{build,package.json} user@127.0.0.1:~/proxy/backEnd/
 scp -r ./shared/{src,package.json} user@127.0.0.1:\~/proxy/shared/  
 then  
 ssh user@127.0.0.1 "cd ~/proxy/shared/ && npm i && npm link"  
-ssh user@127.0.0.1 "cd ~/proxy/backEnd/ && npm i &&  npm link personnal-shared"
+ssh user@127.0.0.1 "cd ~/proxy/backEnd/ && npm i &&  npm link personnal-shared"  
 ssh user@127.0.0.1 "cd ~/proxy/backEnd/ && nohup node ./build/index.js  &"  
 ssh user@127.0.0.1 "tail -f nohup.out"  
   
@@ -28,7 +28,7 @@ You should be aware that you have to handle port redirection, firewall rules and
 blackListCleaner.py :  
 You can create black list file from dns blacklist or raw black list file.  
 A raw black list file is a file containing one url per line.  
-A bns blacklist file a a file on the form : ip url.  
+A dns blacklist file is a file on the form : ip url.  
   
 Example of raw black list :  
 adsroller.com  

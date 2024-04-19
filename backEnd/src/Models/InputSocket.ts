@@ -56,7 +56,7 @@ export default class InputSocket {
                 console.error('Error on client socket:\n' + err + "\n\n");
             });
         });
-        InputSocket.server.listen(6667, "0.0.0.0", () => {
+        InputSocket.server.listen(this.port, "0.0.0.0", () => {
             console.log("Server started\n\n");
         });
     }
