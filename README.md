@@ -26,7 +26,7 @@ You should be aware that you have to handle port redirection, firewall rules and
 
 too make it start at boot :  
 create a file : /etc/systemd/system/deviantProxy.service  
-The file have to look like :
+The file have to look like :  
 [Unit]  
 Description=DeviantProxy Application  
 After=network.target  
