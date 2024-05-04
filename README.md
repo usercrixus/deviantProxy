@@ -24,6 +24,34 @@ ssh user@127.0.0.1 "tail -f nohup.out"
   
 You should be aware that you have to handle port redirection, firewall rules and others network things.  
 
+too make it start at boot :  
+create a file : /etc/systemd/system/deviantProxy.service  
+The file have to look like :
+[Unit]  
+Description=DeviantProxy Application  
+After=network.target  
+
+[Service]  
+Type=simple  
+User=username  
+WorkingDirectory=/home/chaisneau/proxy/backEnd  
+ExecStart=node ./build/index.js  
+Restart=on-failure  
+
+[Install]  
+WantedBy=multi-user.target  
+  
+please, set your own username...  
+then 
+Reload systemd to recognize changes: sudo systemctl daemon-reload  
+Enable the service to start at boot: sudo systemctl enable myservice.service  
+Start the service immediately: sudo systemctl start myservice.service  
+Check the status to ensure it's running without issues: sudo systemctl status myservice.service  
+View logs for any issues during startup or runtime: journalctl -u myservice.service  
+
+
+
+
 # Utilities :
 blackListCleaner.py :  
 You can create black list file from dns blacklist or raw black list file.  
